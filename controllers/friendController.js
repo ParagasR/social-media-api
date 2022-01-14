@@ -6,13 +6,13 @@ const addFriend = async (req, res) => {
     try {
         const userData = User.findOneAndUpdate(
             { _id: req.params.userId },
-            { $addToSet: { friends: req.params.friendId } },
+            { $push: { friends: req.params.friendId } },
             { runValidators: true, new: true }
         )
 
         const friendData = User.findOneAndUpdate(
             { _id: req.params.friendId },
-            { $addToSet: { friends: req.params.userId } },
+            { $push: { friends: req.params.userId } },
             { runValidators: true, new: true }
         )
 

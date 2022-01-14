@@ -45,7 +45,7 @@ const updateThought = async (req, res) => {
             res.status(404).json({ message: 'Thought does not exist' });
         }
 
-        res.status(200).json('Thought successfully updated');
+        res.status(200).json(thoughtData);
     } catch (err) {
         res.status(500).json(err);
     }
@@ -57,7 +57,7 @@ const deleteThought = async (req, res) => {
         if (!thoughtData) {
             res.status(404).json({ message: 'Thought does not exist' });
         }
-        res.status(200).json({ message: 'Thought successfully deleted' })
+        res.status(200).json(thoughtData)
     } catch (err) {
         res.status(500).json(err);
     }
