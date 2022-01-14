@@ -8,6 +8,7 @@ const getUsers = async (req, res) => {
     }
     res.status(200).json(allUserData);
   } catch (err) {
+    console.log(err)
     res.status(500).json(err);
   }
 }
@@ -22,7 +23,8 @@ const getSingleUser = async (req, res) => {
       res.status(404).json({ message: 'User does not exist' });
     }
     res.status(200).json(userData);
-  } catch {
+  } catch (err) {
+    console.log(err)
     res.status(500).json(err);
   }
 }
@@ -31,7 +33,7 @@ const createUser = async (req, res) => {
   try {
     const newUser = await User.create(req.body);
     res.status(200).json(newUser)
-  } catch {
+  } catch (err) {
     res.status(500).json(err);
   }
 }

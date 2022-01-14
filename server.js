@@ -8,10 +8,10 @@ const routes = require('./routes');
 
 // set up server variables
 const PORT = 3001;
-const app = express;
+const app = express();
 
 // add some formatting to the terminal
-app.use(morgan('tine'));
+app.use(morgan('tiny'));
 
 // set up formats for the express and use middleware to redirect the routes
 app.use(express.urlencoded({ extended: true }));

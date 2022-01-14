@@ -41,7 +41,7 @@ const userSchema = new Schema(
 )
 
 // virtual to keep track how many friends a user has
-userSchema.virtual('friendCount').get(() => {
+userSchema.virtual('friendCount').get(function () {
   return this.friends.length;
 })
 

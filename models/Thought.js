@@ -61,7 +61,7 @@ function formatDate(createdAtVal) {
 }
 
 // virtual to get the amount of reactions
-thoughtSchema.virtual('reactionCount').get(() => {
+thoughtSchema.virtual('reactionCount').get(function () {
   return this.reactions.length;
 })
 
