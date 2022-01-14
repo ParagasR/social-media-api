@@ -3,9 +3,19 @@ const { Schema, model, Types } = require('mongoose');
 // Schema to create reactions to associate with the Thought model
 const reactionSchema = new Schema(
   {
-    reactionId: { type: Schema.ObjectId, default: () => new Types.ObjectId },
-    reactionBody: { type: String, required: true, maxlength: 280 },
-    username: { type: String, required: true },
+    reactionId: {
+      type: Schema.ObjectId,
+      default: () => new Types.ObjectId
+    },
+    reactionBody: {
+      type: String,
+      required: true,
+      maxlength: 280
+    },
+    username: {
+      type: String,
+      required: true
+    },
     createdAt: {
       type: Date,
       default: Date.now,
@@ -38,7 +48,8 @@ const thoughtSchema = new Schema(
   // turn virtual settins on
   {
     toJSON: {
-      virtuals: true
+      virtuals: true,
+      getters: true
     },
     id: false
   }

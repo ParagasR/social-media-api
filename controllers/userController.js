@@ -16,9 +16,8 @@ const getUsers = async (req, res) => {
 const getSingleUser = async (req, res) => {
   try {
     const userData = await User.findOne({ _id: req.params.userId })
-      .select('-__v')
-      .populate('thoughts')
-      .populate('friends');
+      .populate({ path: 'thoughts', select: '-__v' })
+      .populate({ path: 'friends', select: '-__v' });
     if (!userData) {
       res.status(404).json({ message: 'User does not exist' });
     }
@@ -41,7 +40,7 @@ const createUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const userData = await User.findOneAndUpdate(
-      { _id: req.params.videoId },
+      { _id: req.params.userId },
       { $set: req.body },
       { runValidators: true, new: true }
     )
@@ -68,4 +67,10 @@ const deleteUser = async (req, res) => {
 }
 
 
-module.exports = { getUsers, getSingleUser, createUser, updateUser, deleteUser }
+module.exports = {
+  getUsers,
+  getSingleUser,
+  createUser,
+  updateUser,
+  deleteUser
+}
