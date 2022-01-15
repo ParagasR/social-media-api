@@ -1,4 +1,5 @@
 const User = require('../models/Users');
+const Thoughts = require('../models/Thought');
 
 const getUsers = async (req, res) => {
   try {
@@ -47,7 +48,7 @@ const updateUser = async (req, res) => {
     if (!userData) {
       res.status(404).json({ message: 'User does not exist' })
     }
-    res.status(200).json({ message: 'User successfully updated' })
+    res.status(200).json(userData)
   } catch (err) {
     res.status(500).json(err)
   }
@@ -55,13 +56,26 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const userData = await User.fineOneAndRemove({ _id: req.params.userId })
+    const userData = await User.findOneAndDelete({ _id: req.params.userId })
     if (!userData) {
       res.status(404).json({ message: 'User does not exist' })
     }
 
-    res.status(200).json({ message: 'User successfully removed' })
+    userData.friends.forEach(async (element) => {
+      const friendData = await User.updateMany(
+        { _id: element._id },
+        { $pull: { friends: userData._id } },
+        { many: true }
+      )
+    });
+
+    userData.thoughs.forEach(async (element) => {
+      const thoughtData = await Thoughts.deleteMany({ _id: element._id })
+    })
+
+    res.status(200).json(userData)
   } catch (err) {
+    console.log(err)
     res.status(500).json(err)
   }
 }
